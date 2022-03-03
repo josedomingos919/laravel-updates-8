@@ -9,10 +9,22 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
 
+    public function  search(Request $request)
+    {
+        $filters = $request->except('_token');
+
+        $posts = Post::where('title', 'LIKE', "%{$request->search}%")
+            ->orWhere('content', 'LIKE', "%{$request->search}%")
+            ->latest()
+            ->paginate(1);
+
+        return view('admin.posts.index', compact('posts', 'filters'));
+    }
+
     public function index()
     {
         //$posts = Post::orderBy('id', 'DESC')->paginate();
-        $posts = Post::latest()->paginate();
+        $posts = Post::latest()->paginate(1);
 
         //dd($posts); NOTA: para imprimir logs
 
