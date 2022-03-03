@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
     public function index()
     {
-        $posts = Post::get();
+        //$posts = Post::orderBy('id', 'DESC')->paginate();
+        $posts = Post::latest()->paginate();
 
         //dd($posts); NOTA: para imprimir logs
 
