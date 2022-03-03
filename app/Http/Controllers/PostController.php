@@ -25,4 +25,26 @@ class PostController extends Controller
         return view('admin.posts.index',  compact('posts'));
         // compact: NOTA: para passar as variaveis do laravel no blade
     }
+
+    public function create()
+    {
+        return view('admin.posts.create');
+    }
+
+    public function store(Request $request)
+    {
+        //dd($request->all()); NOTA: imprime todos os dados do request 
+
+        /*
+        Post::create([
+            'title' => $request->title,
+            'content' => $request->content
+        ]);
+        */
+
+        $post = Post::create($request->all());
+        //$post Nota: Contem um objeto post criado 
+
+        return redirect()->route('posts.index');
+    }
 }
