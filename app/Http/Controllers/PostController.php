@@ -2,9 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    //
+    public function index()
+    {
+        $posts = Post::get();
+
+        //dd($posts); NOTA: para imprimir logs
+
+        /*
+        CASO 1
+
+        return view('admin.posts.index', [
+            'posts' => $posts
+        ]);
+
+        */
+
+        return view('admin.posts.index',  compact('posts'));
+        // compact: NOTA: para passar as variaveis do laravel no blade
+    }
 }
