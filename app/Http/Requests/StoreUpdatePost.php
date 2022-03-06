@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule as ValidationRule;
 
 /* NOTA: para gerar a classe de validação:
 
@@ -29,10 +30,21 @@ class StoreUpdatePost extends FormRequest
      */
     public function rules()
     {
-        return [
-            'title' => 'required|min:3|max:160',
+        $id = $this->segment(2);
+
+        $rules = [
+            'title' => [
+                "required", "min:3", "max:160",
+                ValidationRule::unique('posts')->ignore($id)
+            ],
             'content' => ['nullable', 'min:5', 'max:10000'],
             'image' => ['required', 'image']
         ];
+
+        if ($this->method() == 'PUT') {
+            $rules['image'] = ['nullable', 'image'];
+        }
+
+        return  $rules;
     }
 }
