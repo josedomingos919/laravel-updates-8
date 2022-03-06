@@ -1,0 +1,1 @@
+php artisan storage:link //Usamos para criar um link da pasta publica para a nossa pasta privada para poder aceder as imagens
