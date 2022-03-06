@@ -12,7 +12,7 @@
         </ul>
     @endif
 
-    <form action="{{ route('posts.update', $post->id) }}" method="post"> 
+    <form action="{{ route('posts.update', $post->id) }}" method="post"  enctype="multipart/form-data" > 
         @method('PUT')
         @include('admin.posts._partirals.form', []) 
     </form>

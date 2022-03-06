@@ -26,6 +26,7 @@
     <h1>Posts</h1>
 
     @foreach ($posts as $post)
+        <img src="{{ url($post->image) }}" alt="{{ $post->title }}" style="max-width: 100px">
         {{--NOTA: para passar mais de 1 parametro: route('posts.show', [ 'id'=> 34, 'test'=> 78 ] ) --}}
         <p>
             {{ $post->title }} 

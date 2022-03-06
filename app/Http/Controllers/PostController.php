@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUpdatePost;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -48,6 +49,20 @@ class PostController extends Controller
 
     public function store(StoreUpdatePost $request)
     {
+
+        $data = $request->all();
+
+        if ($request->image->isValid()) {
+
+            $fileName = Str::slug($request->title, '-') . '.' . $request->image->getClientOriginalExtension();
+
+            $request->image->move(public_path('image/post'), $fileName);
+
+            $path = 'image/post/' . $fileName;
+
+            $data['image'] = $path;
+        }
+
         //dd($request->all()); NOTA: imprime todos os dados do request 
 
         /*
@@ -57,7 +72,7 @@ class PostController extends Controller
         ]);
         */
 
-        $post = Post::create($request->all());
+        $post = Post::create($data);
         //$post Nota: Contem um objeto post criado 
 
         return
