@@ -1,41 +1,47 @@
-<a href="{{ route('posts.create') }}">Criar Novo Post</a>
+@extends('admin.layouts.app')
 
-<hr>
+@section('title', 'Listagem dos Posts')
 
-@if (session('message'))
-    <div>
-        {{ session('message') }}
-    </div>
+@section('content')
+    <a href="{{ route('posts.create') }}">Criar Novo Post</a>
+
     <hr>
-@endif
+
+    @if (session('message'))
+        <div>
+            {{ session('message') }}
+        </div>
+        <hr>
+    @endif
 
 
-<form action="{{ route('posts.search') }}" method="post">
-     @csrf
-    <input type="text" name="search" id="" placeholder="Filtrar" >
-    <button type="submit">Enviar</button>
-</form>
+    <form action="{{ route('posts.search') }}" method="post">
+        @csrf
+        <input type="text" name="search" id="" placeholder="Filtrar" >
+        <button type="submit">Enviar</button>
+    </form>
 
-<hr>
+    <hr>
 
-<h1>Posts</h1>
+    <h1>Posts</h1>
 
-@foreach ($posts as $post)
-    {{--NOTA: para passar mais de 1 parametro: route('posts.show', [ 'id'=> 34, 'test'=> 78 ] ) --}}
-    <p>
-        {{ $post->title }} 
-        [
-            <a href="{{ route('posts.show', $post->id) }}">Ver</a> | 
-            <a href="{{ route('posts.edit', $post->id) }}">Editar</a>
-        ]
-    </p>
-@endforeach
+    @foreach ($posts as $post)
+        {{--NOTA: para passar mais de 1 parametro: route('posts.show', [ 'id'=> 34, 'test'=> 78 ] ) --}}
+        <p>
+            {{ $post->title }} 
+            [
+                <a href="{{ route('posts.show', $post->id) }}">Ver</a> | 
+                <a href="{{ route('posts.edit', $post->id) }}">Editar</a>
+            ]
+        </p>
+    @endforeach
 
-<hr>
+    <hr>
 
-@if(isset($filters))
-    {{ $posts->appends($filters)->links() }}
-@else
-    {{ $posts->links() }}
-@endif
+    @if(isset($filters))
+        {{ $posts->appends($filters)->links() }}
+    @else
+        {{ $posts->links() }}
+    @endif
 
+@endsection
